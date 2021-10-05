@@ -1,7 +1,7 @@
 #coding: utf-8
-from chatterbot import ChatBot #pip install chatterbot
-import pyttsx3
-import speech_recognition as sr
+from chatterbot import ChatBot #pip install chatterbot || pip install --upgrade chatterbot_corpus
+import pyttsx3 #pip install pyttsx3
+import speech_recognition as sr #pip install SpeechRecognition
 from chatterbot.trainers import ListTrainer
 #ouvir
 frase=''
@@ -22,30 +22,12 @@ def ouve():
 #falar
 
 def fala(questao):
-    def falar(texto):
-        fala = pyttsx3.init()
-        fala.say(texto)
-        fala.runAndWait()
-        fala.stop()
-    falar(questao)
-fala(questao)
+    voices = fala.getProperty('voices')
+    voz =  53
+    fala.setProperty('voice', voices[voz].id)
+    fala.say(frase)
+    fala.runAndWait()
 
-#chatbot
-def chat(): 
-    bot = ChatBot('c3pO')
-    questao = ListTrainer(bot)
-    #you can add a archive from your computer 
-    #arq = open('C:/Users/KB/Documents/test.txt')
-    #ler = arq.read()
-    #troca = ler.replace('\n', ',')
-    questao.train(['Oi', 'Olá', 'Tudo bem?',
-             'Tudo ótimo', 'qual é o seu nome?, meu nome é c3pO, e o seu?, legal'])
+    fala.stop()
+fala(frase)
 
-    while True:
-        
-        resposta = bot.get_response(ouve())
-        print('eu:', frase)
-        print('bot: ',resposta)
-        fala(resposta)
-
-chat()
